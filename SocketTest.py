@@ -1,3 +1,4 @@
+# Made by Aedan!
 import socket #we are importing the socket library 
 
 try:
@@ -13,6 +14,8 @@ try:
     mySocket.send(request) #sends var "request"
 
     response = mySocket.recv(2000).decode() #Listening for (2000) bytes and then decoding from binary to string ("") to readable version
+    print('Press enter to continue...')
+    input()
     print(f"received: {response} ")
 
 except socket.error as e:       
