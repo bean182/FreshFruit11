@@ -1,0 +1,2 @@
+1. create workspace - done
+2. connect to hypixel with lunar
