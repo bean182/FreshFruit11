@@ -1,0 +1,10 @@
+Try to connect to server 1 make socet 2 verify connection 3 send request 
+
+
+
+
+
+
+
+
+
