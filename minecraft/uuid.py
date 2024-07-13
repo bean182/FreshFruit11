@@ -4,6 +4,9 @@ from typing import Optional
 
 class UserCache:
     def __init__(self, cachePath: str):
+        """
+        :param cachePath: Path to cache file. If cache does not exist, it will be created
+        """ 
         # Load in cache
         self.cachePath: str  = cachePath
         self.cache:     dict = {}
@@ -23,9 +26,21 @@ class UserCache:
             self.cache = {}
 
     def GetUUID(self, username: str) -> Optional[str]:
+        """
+        Get a UUID from the cache
+
+        :param username: Minecraft username
+        :return: UUID if cached, None if uncached
+        """ 
         return self.cache.get(username)
 
     def AddUUID(self, username: str, uuid: str) -> None:
+        """
+        Add a UUID from the cache
+
+        :param username: Minecraft username
+        :param uuid: UUID
+        """ 
         self.cache[username] = uuid
 
         with open(self.cachePath, mode='w', newline='') as f:
@@ -36,6 +51,12 @@ class UserCache:
 cache: UserCache = UserCache("uuidCache.csv")
 
 def getUUID(username: str) -> str:
+    """
+    Gets a UUID. If the username is not found, a hash will be returned
+
+    :param username: Minecraft username
+    :return: UUID
+    """ 
     global cache
 
     uuid = cache.GetUUID(username)
