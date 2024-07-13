@@ -45,15 +45,9 @@ def getNames(text):
     for match in matches:
         username = match[0]
         UUID = minecraft.getUUID(username)
-        #UUID = getUUID(username)
 
-        # check if uuid was found
-        if UUID is None:
-            id = f"{hash(username) & ((1 << 64) - 1):016X}"
-            key = "[" + id + "] No UID Found:"
-            users[key] = [username]
         # check if the dictionary already contains uuid
-        elif UUID in users.keys():
+        if UUID in users.keys():
             # check if username is already used (duplicate)
             if not username in users[UUID]:
                 # append username to value array in existing dictionary entry
@@ -64,13 +58,6 @@ def getNames(text):
     
     # return dict so it can be used elsewhere
     return users
-
-# query minecraft api for uuid
-# def getUUID(username):
-#     try:
-#         return requests.get(f"https://api.mojang.com/users/profiles/minecraft/{username}?").json()["id"]
-#     except Exception as e:
-#         return None
 
 # directoryPath = "C:\\Users\\49151\\Desktop\\Old logs"
 directoryPath = "./Data"
@@ -88,9 +75,6 @@ for uuid, nameArray in userDictionary.items():
     print(output)
 
 
-# Hello
-
-
 with open("output.txt", 'wt') as textFile:
     textFile.write(str(userDictionary.items())) 
     
@@ -100,4 +84,3 @@ with open("output.txt", 'wt') as textFile:
 
 #TODO:
 #-username not found on mc api
-# Cache for faster interaction 
