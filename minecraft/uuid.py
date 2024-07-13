@@ -35,7 +35,7 @@ class UserCache:
 
 cache: UserCache = UserCache("uuidCache.csv")
 
-def getUUID(username: str):
+def getUUID(username: str) -> str:
     global cache
 
     uuid = cache.GetUUID(username)
@@ -49,4 +49,8 @@ def getUUID(username: str):
 
         return uuid
     except Exception as e:
-        return None
+        # Username not found, create fake uuid
+        uuid = f"{hash(username) & ((1 << 64) - 1):016X}"
+        cache.AddUUID(username, uuid)
+
+        return uuid

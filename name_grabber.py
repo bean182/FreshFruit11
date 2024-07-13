@@ -1,7 +1,8 @@
-import gzip
 import os
 import re
-import requests 
+import gzip
+import minecraft
+
 
 # extract all previous logs from zip to regular file AND latest file and read file 
 def extractFiles(directory):
@@ -32,7 +33,7 @@ def extractFiles(directory):
 
     # return dict so it can be used elsewhere
     return users
-                 
+
 # search for unique pattern (FINAL KILL!)
 def getNames(text):
     pattern = r"\[CHAT\] (.+?) was (.+?) FINAL KILL!"
@@ -43,7 +44,8 @@ def getNames(text):
 
     for match in matches:
         username = match[0]
-        UUID = getUUID(username)
+        UUID = minecraft.getUUID(username)
+        #UUID = getUUID(username)
 
         # check if uuid was found
         if UUID is None:
@@ -64,12 +66,12 @@ def getNames(text):
     return users
 
 # query minecraft api for uuid
-def getUUID(username):
-    try:
-        return requests.get(f"https://api.mojang.com/users/profiles/minecraft/{username}?").json()["id"]
-    except Exception as e:
-        return None
-    
+# def getUUID(username):
+#     try:
+#         return requests.get(f"https://api.mojang.com/users/profiles/minecraft/{username}?").json()["id"]
+#     except Exception as e:
+#         return None
+
 # directoryPath = "C:\\Users\\49151\\Desktop\\Old logs"
 directoryPath = "./Data"
 
