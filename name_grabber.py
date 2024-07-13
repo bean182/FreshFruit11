@@ -17,17 +17,18 @@ def extractFiles(directory):
             if file.endswith(".gz"):
                 with gzip.open(filePath, "rt", encoding="latin-1") as textFile:
                     text = textFile.read()
-                    #print(text)
+                    # print(text)
 
                     # combine current user dict with updated data
                     users.update(getNames(text))
 
-            elif file.endswith(".txt"):
-                text = textFile.read().decode("utf-8")
-                #print(text)
+            else:
+                with open(filePath, "rt") as textFile:
+                    text = textFile.read()
+                    # print(text)
 
-                # combine current user dict with updated data
-                users.update(getNames(text))
+                    # combine current user dict with updated data
+                    users.update(getNames(text))
 
     # return dict so it can be used elsewhere
     return users
@@ -44,8 +45,13 @@ def getNames(text):
         username = match[0]
         UUID = getUUID(username)
 
+        # check if uuid was found
+        if UUID is None:
+            id = f"{hash(username) & ((1 << 64) - 1):016X}"
+            key = "[" + id + "] No UID Found:"
+            users[key] = [username]
         # check if the dictionary already contains uuid
-        if UUID in users.keys():
+        elif UUID in users.keys():
             # check if username is already used (duplicate)
             if not username in users[UUID]:
                 # append username to value array in existing dictionary entry
@@ -64,7 +70,8 @@ def getUUID(username):
     except Exception as e:
         return None
     
-directoryPath = "C:\\Users\\49151\\Desktop\\Old logs"
+# directoryPath = "C:\\Users\\49151\\Desktop\\Old logs"
+directoryPath = "./Data"
 
 # catch the output of getNames() in a dictionary
 userDictionary = extractFiles(directoryPath)
@@ -73,9 +80,9 @@ userDictionary = extractFiles(directoryPath)
 # the items() method lists all key-value pairs
 # the uuid was used as the key and the value is an array of usernames that user has had
 for uuid, nameArray in userDictionary.items():
-    output = uuid
+    output = str(uuid)
     for username in nameArray:
-        output += " " + username
+        output += " " + str(username)
     print(output)
 
 #TODO:
