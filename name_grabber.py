@@ -85,6 +85,17 @@ for uuid, nameArray in userDictionary.items():
         output += " " + str(username)
     print(output)
 
+
+
+
+
+with open("output.txt", 'wt') as textFile:
+    textFile.write(str(userDictionary.items())) 
+    
+
+
+
+
 #TODO:
 #-username not found on mc api
-#-save data to file for quick access later
+# Cache for faster interaction 
