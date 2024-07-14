@@ -70,8 +70,8 @@ def getUUID(username: str) -> str:
 
         return uuid
     except Exception as e:
-        # Username not found, create fake uuid
-        uuid = f"{hash(username) & ((1 << 64) - 1):016X}"
+        # Username not found, return None
+        uuid = None
         cache.AddUUID(username, uuid)
 
         return uuid

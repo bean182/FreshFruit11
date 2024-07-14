@@ -1,7 +1,8 @@
 import os
 import re
 import gzip
-import minecraft
+# import minecraft
+from minecraft import uuid as mc
 
 
 # extract all previous logs from zip to regular file AND latest file and read file 
@@ -44,7 +45,7 @@ def getNames(text):
 
     for match in matches:
         username = match[0]
-        UUID = minecraft.getUUID(username)
+        UUID = mc.getUUID(username)
 
         # check if the dictionary already contains uuid
         if UUID in users.keys():
@@ -75,7 +76,7 @@ for uuid, nameArray in userDictionary.items():
         output = str(uuid)
         for username in nameArray:
             output += " " + str(username)
-        print(output)
+        # print(output) # removed for visual clarity
         validCount += 1
     else:
         invalidCount = len(nameArray)
@@ -85,4 +86,6 @@ with open(outputFile, 'wt') as textFile:
     textFile.write(str(userDictionary.items())) 
     
 print(f"Matched {validCount} usernames to UUID. Unable to match {invalidCount} usernames.")
-print(f"Results written to {outputFile}")
+print(f"Results written to \"{outputFile}\"")
+
+# REMEMBER to clear cache before testing
