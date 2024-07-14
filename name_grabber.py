@@ -23,7 +23,7 @@ def extractFiles(directory):
                     # combine current user dict with updated data
                     users.update(getNames(text))
 
-            else:
+            elif file.endswith(".txt") or file.endswith(".log"):
                 with open(filePath, "rt") as textFile:
                     text = textFile.read()
                     # print(text)
@@ -68,19 +68,21 @@ userDictionary = extractFiles(directoryPath)
 # print dictionary
 # the items() method lists all key-value pairs
 # the uuid was used as the key and the value is an array of usernames that user has had
+validCount = 0
+invalidCount = 0
 for uuid, nameArray in userDictionary.items():
-    output = str(uuid)
-    for username in nameArray:
-        output += " " + str(username)
-    print(output)
+    if not uuid is None:
+        output = str(uuid)
+        for username in nameArray:
+            output += " " + str(username)
+        print(output)
+        validCount += 1
+    else:
+        invalidCount = len(nameArray)
 
-
-with open("output.txt", 'wt') as textFile:
+outputFile = "output.txt"
+with open(outputFile, 'wt') as textFile:
     textFile.write(str(userDictionary.items())) 
     
-
-
-
-
-#TODO:
-#-username not found on mc api
+print(f"Matched {validCount} usernames to UUID. Unable to match {invalidCount} usernames.")
+print(f"Results written to {outputFile}")
