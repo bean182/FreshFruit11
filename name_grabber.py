@@ -72,7 +72,7 @@ userDictionary = extractFiles(directoryPath)
 validCount = 0
 invalidCount = 0
 for uuid, nameArray in userDictionary.items():
-    if not uuid is None:
+    if not uuid is None and uuid != "":
         output = str(uuid)
         for username in nameArray:
             output += " " + str(username)

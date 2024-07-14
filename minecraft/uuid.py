@@ -52,7 +52,7 @@ cache: UserCache = UserCache("uuidCache.csv")
 
 def getUUID(username: str) -> str:
     """
-    Gets a UUID. If the username is not found, a hash will be returned
+    Gets a UUID. If the username is not found, None is returned.
 
     :param username: Minecraft username
     :return: UUID
